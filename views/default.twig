@@ -1,0 +1,71 @@
+<style>
+    #g-rev-style-def.uk-slider {
+        margin: 20px 10px;
+    }
+    
+    #g-rev-style-def .tm-review-box {
+      padding: 20px;
+      box-shadow: 0px 0px 8px #cccccc;
+      margin: 12px;
+      border-radius: 10px;
+      background: #ffffff;
+      text-align: center;
+    }
+    
+    #g-rev-style-def .tm-review-box span > img {
+      width: 35px;
+      height: 35px;
+      margin-bottom: 15px;
+    }
+    
+    #g-rev-style-def .tm-review-stars {
+      color: gold;
+    }
+    
+    #g-rev-style-def .tm-review-stars > i {
+      margin: 0 2px;
+    }
+    
+    #g-rev-style-def .tm-review-text {
+      font-style: italic;
+    }
+    
+    </style>
+
+<div id='g-rev-style-def' uk-slider>
+
+    <div class="uk-position-relative">
+      
+        <div class="uk-slider-container">
+            <ul class="uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l uk-grid-small" uk-height-match=".tm-review-box">
+                {# {% for review in reviews_bowie|slice(0, 6) %} #}
+                {% for review in reviews|slice(0, 8) %}
+                <li>
+                    <div class="tm-review-box reviewsingle" itemprop="review" itemscope="" itemtype="http://schema.org/Review">
+                    <span class="uk-display-block uk-text-center"><img src="https://blogsdir.imgix.net/952/files/icons/social/google.svg" alt=""></span>
+                    <div class="tm-review">
+                        <div class="tm-review-stars uk-text-center">
+                            {% for i in range(1, review.stars) %}
+                                <i class="fa-solid fa-star"></i>
+                            {% endfor %}
+                        </div>
+                        {% if review.edited_review %}
+                            <p class="tm-review-text" itemprop="description">{{ review.edited_review|slice(0, 200) }}...</p>
+                        {% endif %}
+                        <p class="tm-review-signature uk-text-center">{{review.signature}}</p>
+                        <p class="uk-text-small uk-text-center">from {{review.location}}</p>
+                    </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a class="uk-position-center-left-out uk-position-small" href uk-slidenav-previous uk-slider-item="previous"><i class="fa-solid fa-chevron-left fa-2xl uk-margin-right g6-hover-color-fourth" aria-hidden="true"></i></a>
+        <a class="uk-position-center-right-out uk-position-small" href uk-slidenav-next uk-slider-item="next"><i class="fa-solid fa-chevron-right fa-2xl uk-margin-left g6-hover-color-fourth" aria-hidden="true"></i></a>
+
+    </div>
+
+    <ul class="uk-slider-nav uk-dotnav uk-flex uk-flex-center"></ul>
+
+</div>

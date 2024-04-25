@@ -1,0 +1,35 @@
+{# views/google-reviews-page.twig #}
+
+<h2>Google Reviews Settings</h2>
+
+<form method="post" action="">
+    <label for="google_reviews_style">Select a Style:</label>
+    <select name="google_reviews_style" id="google_reviews_style">
+        {% for style in styles %}
+        <option value="{{ style }}" {% if current_style == style %}selected{% endif %}>{{ style|capitalize }}</option>
+        {% endfor %}
+    </select>
+
+    <p><input type="submit" name="submit" class="button button-primary" value="Save Changes"></p>
+</form>
+<hr />
+
+<h2>Preview Style {% for style in styles %}{% if current_style == style %} {{ style|slice(-1) }} {% endif %} {% endfor %}</h2>
+{# Display Google Reviews using an iframe to avoid loading uikit and with JavaScript to hide admin bar #}
+<div>
+    {% if google_reviews_page_link %}
+        {% set iframe_url = google_reviews_page_link ~ '?wpadminbar=false' %}
+        <iframe src="{{ iframe_url }}" width="100%" height="600" frameborder="0" style="border:0;" allowfullscreen></iframe>
+        <script>
+            // JavaScript to hide admin bar in the iframe
+            window.onload = function() {
+                var iframe = document.querySelector('iframe');
+                if (iframe) {
+                    iframe.contentWindow.document.getElementById('wpadminbar').style.display = 'none';
+                }
+            };
+        </script>
+    {% else %}
+        <p class="g6-color-pinterest">Error: Google Reviews page not found. Please make sure you have created a page titled "Google Reviews" and the shortcode [google_reviews] is placed on the page.</p>
+    {% endif %}
+</div>
